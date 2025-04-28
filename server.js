@@ -7,7 +7,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Inicializar o Gemini com a API Key
+// Inicializar o Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(express.json());
@@ -15,12 +15,6 @@ app.use(express.static('public'));
 
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
-
-  // Verificar se o usuário está perguntando sobre FURIA ou CS
-  /*if (!/(furia|cs|counter[-\s]?strike|partida|jogo|próximo jogo|próxima partida|line[-\s]?up|time|elenco|próximo adversário)/i.test(message)) {
-    return res.json({ reply: 'Desculpe, só posso responder perguntas sobre o time de CS da FURIA! 🐺' });
-  } */
-  
 
   try {
     const model = genAI.getGenerativeModel({
@@ -42,8 +36,8 @@ app.post('/api/chat', async (req, res) => {
     });
 
     const response = await result.response;
-    const botReply = response.text() || 'Não consegui encontrar essa informação. Pode reformular?'
-    .replace(/\*{1,2}/g, '');
+    let botReply = response.text() || 'Não consegui encontrar essa informação. Pode reformular?';
+    botReply = botReply.replace(/\*+/g, '');
 
     res.json({ reply: botReply });
 

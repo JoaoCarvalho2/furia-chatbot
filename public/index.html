@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="./favicom.png" type="image/png">
 </head>
 <body class="bg-black text-white">
   <!-- Efeito de Partículas para Fundo -->
@@ -110,10 +111,10 @@
     <footer class="w-full max-w-4xl text-center py-4 text-xs text-gray-500">
       <p>© 2025 FURIA Esports. Todos os direitos reservados.</p>
       <div class="social-links mt-2 flex justify-center space-x-4">
-        <a href="https://x.com/FURIA" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/furiagg/" class="hover:text-furia-yellow transition-colors"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.twitch.tv/team/furia" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitch"></i></a>
-        <a href="https://www.youtube.com/@FURIAgg" class="hover:text-furia-yellow transition-colors"><i class="fab fa-youtube"></i></a>
+        <a href="https://x.com/FURIA" target="_blank" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/furiagg/" target="_blank" class="hover:text-furia-yellow transition-colors"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitch.tv/team/furia" target="_blank" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitch"></i></a>
+        <a href="https://www.youtube.com/@FURIAgg" target="_blank" class="hover:text-furia-yellow transition-colors"><i class="fab fa-youtube"></i></a>
       </div>
     </footer>
   </div>
@@ -269,7 +270,7 @@
       });
     }
     
-    // Animações com GSAP se disponível
+    // Animações com GSAP 
     if (window.gsap) {
       gsap.from(".logo-container", { opacity: 0, y: -20, duration: 1 });
       gsap.from(".chat-container", { opacity: 0, y: 20, duration: 1, delay: 0.3 });
