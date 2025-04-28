@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FURIA CS Chatbot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white">
+  <!-- Efeito de Partículas para Fundo -->
+  <div id="particles-js" class="fixed inset-0 z-0"></div>
+  
+  <!-- Container Principal -->
+  <div class="relative z-10 min-h-screen flex flex-col items-center px-4">
+    
+    <!-- Header -->
+    <header class="w-full max-w-4xl pt-6 pb-4">
+      <div class="flex justify-between items-center">
+        <div class="logo-container flex items-center">
+          <img src="https://api.draft5.gg/teams/330/logo" alt="FURIA Logo" class="h-12 mr-2">
+          <div class="logo-text">
+            <h1 class="text-3xl font-bold tracking-wider">FURIA</h1>
+            <p class="text-sm text-furia-yellow uppercase tracking-widest">CS2 Chatbot</p>
+          </div>
+        </div>
+        <div class="status-indicator flex items-center">
+          <span class="pulse-dot"></span>
+          <span class="text-xs ml-2 text-green-400">ONLINE</span>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="w-full max-w-4xl flex-grow flex flex-col mb-6">
+      <!-- Decorative CS2-inspired HUD elements -->
+      <div class="hud-elements">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <div class="hud-line top"></div>
+        <div class="hud-line bottom"></div>
+      </div>
+      
+      <!-- Chat Container -->
+      <div class="chat-container flex-grow relative">
+        <div id="chat" class="messages-area overflow-y-auto h-full p-4 space-y-3">
+          <!-- Mensagem inicial do bot -->
+          <div class="message bot-message">
+            <div class="message-avatar">
+              <img src="https://api.draft5.gg/teams/330/logo" alt="FURIA Bot" class="h-8 w-8">
+            </div>
+            <div class="message-content">
+              <div class="message-header">
+                <span class="message-sender">FURIA Bot</span>
+                <span class="message-time">Agora</span>
+              </div>
+              <div class="message-text">
+                Olá! Sou o chatbot oficial da FURIA CS2. Como posso ajudar você hoje? Pergunte-me sobre nosso time, jogadores, próximos campeonatos ou qualquer coisa relacionada à FURIA no cenário competitivo.
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Efeito de digitação -->
+        <div id="typing-indicator" class="hidden">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Input Area -->
+      <div class="input-area mt-4">
+        <form id="chat-form" class="flex">
+          <input 
+            id="user-input" 
+            type="text" 
+            placeholder="Pergunte sobre a FURIA CS2..." 
+            class="flex-grow py-3 px-4 rounded-l-md bg-gray-800 border-2 border-gray-700 focus:border-furia-yellow focus:outline-none transition-all duration-300"
+            required
+          >
+          <button 
+            type="submit" 
+            class="submit-btn flex items-center justify-center px-6 rounded-r-md bg-gradient-furia hover:bg-gradient-furia-hover transition-all duration-300"
+          >
+            <i class="fas fa-paper-plane mr-2"></i>
+            <span>Enviar</span>
+          </button>
+        </form>
+      </div>
+      
+      <!-- Quick Questions -->
+      <div class="quick-questions mt-4">
+        <p class="text-sm text-gray-400 mb-2">Perguntas Rápidas:</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="quick-btn">Próximo jogo?</button>
+          <button class="quick-btn">Line-up atual</button>
+          <button class="quick-btn">Últimos resultados</button>
+          <button class="quick-btn">História da FURIA</button>
+        </div>
+      </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="w-full max-w-4xl text-center py-4 text-xs text-gray-500">
+      <p>© 2025 FURIA Esports. Todos os direitos reservados.</p>
+      <div class="social-links mt-2 flex justify-center space-x-4">
+        <a href="https://x.com/FURIA" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/furiagg/" class="hover:text-furia-yellow transition-colors"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitch.tv/team/furia" class="hover:text-furia-yellow transition-colors"><i class="fab fa-twitch"></i></a>
+        <a href="https://www.youtube.com/@FURIAgg" class="hover:text-furia-yellow transition-colors"><i class="fab fa-youtube"></i></a>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  
+  <script>
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+    const chat = document.getElementById('chat');
+    const typingIndicator = document.getElementById('typing-indicator');
+    
+    // Configurar botões de perguntas rápidas
+    const quickButtons = document.querySelectorAll('.quick-btn');
+    quickButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        userInput.value = btn.textContent;
+        chatForm.dispatchEvent(new Event('submit'));
+      });
+    });
+    
+    // Função para adicionar uma mensagem do usuário
+    function addUserMessage(text) {
+      const now = new Date();
+      const time = now.getHours().toString().padStart(2, '0') + ':' + 
+                  now.getMinutes().toString().padStart(2, '0');
+      
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('message', 'user-message');
+      messageEl.innerHTML = `
+        <div class="message-content user-content">
+          <div class="message-header">
+            <span class="message-sender">Você</span>
+            <span class="message-time">${time}</span>
+          </div>
+          <div class="message-text">
+            ${text}
+          </div>
+        </div>
+      `;
+      chat.appendChild(messageEl);
+      chat.scrollTop = chat.scrollHeight;
+    }
+    
+    // Função para adicionar uma mensagem do bot
+    function addBotMessage(text) {
+      const now = new Date();
+      const time = now.getHours().toString().padStart(2, '0') + ':' + 
+                  now.getMinutes().toString().padStart(2, '0');
+      
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('message', 'bot-message');
+      messageEl.innerHTML = `
+        <div class="message-avatar">
+          <img src="https://api.draft5.gg/teams/330/logo" alt="FURIA Bot" class="h-8 w-8">
+        </div>
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-sender">FURIA Bot</span>
+            <span class="message-time">${time}</span>
+          </div>
+          <div class="message-text">
+            ${text}
+          </div>
+        </div>
+      `;
+      chat.appendChild(messageEl);
+      chat.scrollTop = chat.scrollHeight;
+    }
+    
+    // Mostrar indicador de digitação
+    function showTyping() {
+      typingIndicator.classList.remove('hidden');
+      chat.scrollTop = chat.scrollHeight;
+    }
+    
+    // Esconder indicador de digitação
+    function hideTyping() {
+      typingIndicator.classList.add('hidden');
+    }
+    
+    // Função principal para processar o envio do chat
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = userInput.value.trim();
+      if (!message) return;
+      
+      // Adicionar mensagem do usuário
+      addUserMessage(message);
+      userInput.value = '';
+      
+      // Mostrar indicador de digitação
+      showTyping();
+      
+      try {
+        // Enviar para a API - usando o mesmo código do index.html
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        
+        // Esconder indicador de digitação após receber resposta
+        hideTyping();
+        
+        // Adicionar resposta do bot
+        addBotMessage(data.reply);
+      } catch (error) {
+        console.error('Erro ao processar mensagem:', error);
+        hideTyping();
+        addBotMessage('Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente mais tarde.');
+      }
+    });
+    
+    // Inicializar o particles.js
+    if (window.particlesJS) {
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#5d1be0" },
+          opacity: { value: 0.3, random: false },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#5d1be0",
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          }
+        },
+        retina_detect: true
+      });
+    }
+    
+    // Animações com GSAP se disponível
+    if (window.gsap) {
+      gsap.from(".logo-container", { opacity: 0, y: -20, duration: 1 });
+      gsap.from(".chat-container", { opacity: 0, y: 20, duration: 1, delay: 0.3 });
+      gsap.from(".input-area", { opacity: 0, y: 20, duration: 1, delay: 0.5 });
+      gsap.from(".quick-questions", { opacity: 0, y: 20, duration: 1, delay: 0.7 });
+      
+      // Animação para os cantos HUD
+      gsap.from(".hud-corner", { 
+        opacity: 0, 
+        scale: 0.8, 
+        duration: 1.2, 
+        delay: 0.2,
+        stagger: 0.1,
+        ease: "elastic.out(1, 0.5)"
+      });
+      
+      // Animação para as linhas HUD
+      gsap.from(".hud-line", {
+        width: 0,
+        duration: 1.5,
+        delay: 0.5,
+        ease: "power3.out"
+      });
+    }
+  </script>
+</body>
+</html>
