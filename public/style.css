@@ -312,7 +312,7 @@ body {
 .typing-dots span {
   height: 7px;
   width: 7px;
-  margin: 0 1px;
+  margin: 0 3px;  /* Aumentado para separar mais os pontos */
   background-color: var(--furia-yellow);
   border-radius: 50%;
   display: inline-block;
@@ -336,6 +336,27 @@ body {
   30% { transform: translateY(-5px); opacity: 1; }
 }
 
+/* Estilos para cursor de digitação */
+.message-text span[id^="typing-message-"] {
+  display: inline;
+  position: relative;
+}
+
+.message-text span[id^="typing-message-"]::after {
+  content: '';  /* Removido o conteúdo '|' */
+  position: relative;
+  margin-left: 0;
+  opacity: 0;
+}
+
+/* Estilização do indicador de digitação (pensando) */
+.thinking-message {
+  animation: fadeIn 0.3s ease-out;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 /* Input Area */
 .input-area {
   width: 100%;
@@ -462,6 +483,15 @@ footer {
   .quick-questions .flex {
     justify-content: center;
   }
+}
+
+#typing-indicator {
+  padding: 0;
+  margin: 10px 0;
+}
+
+#typing-indicator:not(.hidden) {
+  display: block;
 }
 
 /* Page Load Animation */

@@ -28,7 +28,10 @@ app.post('/api/chat', async (req, res) => {
           role: "user",
           parts: [
             {
-              text: `Responda apenas baseado em fontes oficiais sobre o time de CS da FURIA: ${message}`,
+              text: `
+              Responda apenas baseado em fontes oficiais sobre o time de CS da FURIA a seguinte mensagem: ${message}
+              observação: se a mensagem não for sobre o mundo de esports de counter strike, responda apenas a seguinte mensagem: "não fui programado para responder esse tipo de pergunta".
+              `,
             },
           ],
         },
